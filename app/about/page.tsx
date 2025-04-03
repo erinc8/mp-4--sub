@@ -1,3 +1,8 @@
+// Add these directives at the top of your file
+export const dynamic = 'force-dynamic'; // Forces dynamic rendering
+// Or use this instead if you want to cache and revalidate:
+// export const revalidate = 3600; // Revalidates every hour
+
 interface Artwork {
     objectnumber: string;
     title: string | null;
@@ -7,17 +12,26 @@ interface Artwork {
 
 export default async function AboutPage() {
     try {
+        // Add logging to debug environment variable issues
+        console.log('API Key available:', !!process.env.HARVARD_API_KEY);
+
+        if (!process.env.HARVARD_API_KEY) {
+            throw new Error('API key not found');
+        }
+
         const response = await fetch(
             `https://api.harvardartmuseums.org/object?apikey=${process.env.HARVARD_API_KEY}&size=9&hasimage=1&q=imagepermissionlevel:0 AND title:* AND period:* AND medium:*&fields=title,medium,period,objectnumber`
         );
 
+        // More detailed error information
         if (!response.ok) {
-            throw new Error('Failed to fetch artwork details');
+            throw new Error(`Failed to fetch artwork details: ${response.status} ${response.statusText}`);
         }
 
         const data = await response.json();
         const artworks: Artwork[] = data.records;
 
+        // Rest of your component remains the same
         if (!artworks || artworks.length === 0) {
             return (
                 <div className="container mx-auto p-4">
@@ -54,6 +68,8 @@ export default async function AboutPage() {
             </div>
         );
     } catch (error) {
+        // Improved error display
+        console.error('Error fetching artwork:', error);
         return (
             <div className="container mx-auto p-4">
                 <h1 className="text-4xl font-bold mb-8">Error</h1>
