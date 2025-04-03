@@ -1,4 +1,4 @@
-import Image from 'next/image';
+
 
 interface Artwork {
     objectnumber: string;
@@ -11,7 +11,7 @@ interface Artwork {
 export default async function AboutPage() {
     try {
         const response = await fetch(
-            `https://api.harvardartmuseums.org/object?apikey=${process.env.HARVARD_API_KEY}&size=9&hasimage=1&q=imagepermissionlevel:0 AND title:* AND primaryimageurl:* AND period:* AND medium:*&fields=title,primaryimageurl,medium,period,objectnumber`
+            `https://api.harvardartmuseums.org/object?apikey=${process.env.HARVARD_API_KEY}&size=9&hasimage=1&q=imagepermissionlevel:0 AND title:* AND period:* AND medium:*&fields=title,primaryimageurl,medium,period,objectnumber`
         );
 
         if (!response.ok) {
