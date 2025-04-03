@@ -20,7 +20,7 @@ export default async function AboutPage() {
         }
 
         const response = await fetch(
-            `https://api.harvardartmuseums.org/object?apikey=${process.env.HARVARD_API_KEY}&size=9&hasimage=1&q=imagepermissionlevel:0 AND title:* AND period:* AND medium:*&fields=title,medium,period,objectnumber`
+            `https://api.harvardartmuseums.org/object?apikey=${process.env.HARVARD_API_KEY}&size=9`
         );
 
         // More detailed error information
