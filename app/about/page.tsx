@@ -1,7 +1,3 @@
-// Add these directives at the top of your file
-export const dynamic = 'force-dynamic'; // Forces dynamic rendering
-// Or use this instead if you want to cache and revalidate:
-// export const revalidate = 3600; // Revalidates every hour
 
 interface Artwork {
     objectnumber: string;
