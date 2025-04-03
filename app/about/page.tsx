@@ -1,9 +1,6 @@
-
-
 interface Artwork {
     objectnumber: string;
     title: string | null;
-
     period: string | null;
     medium: string | null;
 }
@@ -11,7 +8,7 @@ interface Artwork {
 export default async function AboutPage() {
     try {
         const response = await fetch(
-            `https://api.harvardartmuseums.org/object?apikey=${process.env.HARVARD_API_KEY}&size=9&permissionlevel:0 AND title:* AND period:* AND medium:*&fields=title,medium,period,objectnumber`
+            `https://api.harvardartmuseums.org/object?apikey=${process.env.HARVARD_API_KEY}&size=9&hasimage=1&q=imagepermissionlevel:0 AND title:* AND period:* AND medium:*&fields=title,medium,period,objectnumber`
         );
 
         if (!response.ok) {
@@ -40,8 +37,6 @@ export default async function AboutPage() {
                             key={artwork.objectnumber}
                             className="border rounded-lg shadow-md p-4 bg-white hover:shadow-lg transition-shadow duration-300"
                         >
-
-
                             <h2 className="text-lg font-semibold mb-2">
                                 {artwork.title || "Untitled"}
                             </h2>
