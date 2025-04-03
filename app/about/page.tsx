@@ -1,4 +1,3 @@
-
 interface Artwork {
     objectnumber: string;
     title: string | null;
@@ -8,7 +7,6 @@ interface Artwork {
 
 export default async function AboutPage() {
     try {
-        // Add logging to debug environment variable issues
         console.log('API Key available:', !!process.env.HARVARD_API_KEY);
 
         if (!process.env.HARVARD_API_KEY) {
@@ -19,7 +17,6 @@ export default async function AboutPage() {
             `https://api.harvardartmuseums.org/object?apikey=${process.env.HARVARD_API_KEY}&size=9`
         );
 
-        // More detailed error information
         if (!response.ok) {
             throw new Error(`Failed to fetch artwork details: ${response.status} ${response.statusText}`);
         }
@@ -27,7 +24,6 @@ export default async function AboutPage() {
         const data = await response.json();
         const artworks: Artwork[] = data.records;
 
-        // Rest of your component remains the same
         if (!artworks || artworks.length === 0) {
             return (
                 <div className="container mx-auto p-4">
@@ -40,31 +36,18 @@ export default async function AboutPage() {
         return (
             <div className="container mx-auto p-4">
                 <h1 className="text-4xl font-bold mb-8">Harvard Art Museum Collection</h1>
-
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {artworks.map((artwork) => (
-                        <div
-                            key={artwork.objectnumber}
-                            className="border rounded-lg shadow-md p-4 bg-white hover:shadow-lg transition-shadow duration-300"
-                        >
-                            <h2 className="text-lg font-semibold mb-2">
-                                {artwork.title || "Untitled"}
-                            </h2>
-
-                            <p className="text-sm text-gray-600 mb-1">
-                                <strong>Period:</strong> {artwork.period || "Period unknown"}
-                            </p>
-
-                            <p className="text-sm text-gray-600">
-                                <strong>Medium:</strong> {artwork.medium || "Medium unknown"}
-                            </p>
+                        <div key={artwork.objectnumber} className="border rounded-lg shadow-md p-4 bg-white hover:shadow-lg transition-shadow duration-300">
+                            <h2 className="text-lg font-semibold mb-2">{artwork.title || "Untitled"}</h2>
+                            <p className="text-sm text-gray-600 mb-1"><strong>Period:</strong> {artwork.period || "Period unknown"}</p>
+                            <p className="text-sm text-gray-600"><strong>Medium:</strong> {artwork.medium || "Medium unknown"}</p>
                         </div>
                     ))}
                 </div>
             </div>
         );
     } catch (error) {
-        // Improved error display
         console.error('Error fetching artwork:', error);
         return (
             <div className="container mx-auto p-4">
