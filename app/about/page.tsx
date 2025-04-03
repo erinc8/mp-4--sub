@@ -19,8 +19,8 @@ export default async function AboutPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                {artworks.map((artwork: { objectnumber: Key | null | undefined; primaryimageurl: any; title: any; period: any; medium: any; }) => {
-                    return (
+                {artworks.map((artwork: { objectnumber: Key | null | undefined; primaryimageurl: never; title: never; period: never; medium: never; }) =>
+                    (
                         <div
                             key={artwork.objectnumber}
                             className="border rounded-lg shadow-md p-4 bg-white"
@@ -47,8 +47,7 @@ export default async function AboutPage() {
                                 <strong>Medium:</strong> {artwork.medium || "Medium unknown"}
                             </p>
                         </div>
-                    );
-                })}
+                    ))}
             </div>
         </div>
     );
